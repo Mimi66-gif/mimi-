@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متحف ميمي الفني | Mimi's Art Museum</title>
+  <meta name="description"
+    content="متحف ميمي الفني لعرض الرسومات الرائعة وصور الحياة اليومية والذكريات الجميلة بألوان الطبيعة الخضراء والبنية الدافئة.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+</head>
+
+<body>
+
+  <!-- ======================== NAVBAR ======================== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo">
+      <div class="logo-icon">🎨</div>
+      <span class="logo-text">متحف ميمي</span>
+    </div>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="nav-link active" data-target="home">الرئيسية</a></li>
+      <li><a href="#drawings" class="nav-link" data-target="drawings">معرض رسوماتي 🖌️</a></li>
+      <li><a href="#life" class="nav-link" data-target="life">حياتي اليومية 📷</a></li>
+      <li><a href="#about" class="nav-link" data-target="about">عن ميمي 🌿</a></li>
+      <li>
+        <button class="nav-btn creator-only" id="quickAddBtn" onclick="openUploadModal('drawing')">
+          + إضافة رسمة
+        </button>
+      </li>
+      <li>
+        <button class="artist-auth-btn" id="artistAuthNavBtn" onclick="handleAuthButtonClick()">
+          🔒 دخول ميمي
+        </button>
+      </li>
+    </ul>
+
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="القائمة">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <!-- ======================== PAGE 1: HOME ======================== -->
+  <section id="home" class="page active">
+    <!-- Hero Section -->
+    <header class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-badge">✨ مرحباً بكم في المعرض الخاص</div>
+        <h1 class="hero-title">متحف <span>ميمي</span> الفني</h1>
+        <p class="hero-subtitle">
+          مساحة دافئة تحتضن إبداعات رسمي ولوحاتي، ولحظات من تفاصيل حياتي اليومية.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="navigateTo('drawings')">
+            <span>🎨</span> استكشف الرسومات
+          </button>
+          <button class="btn btn-secondary" onclick="navigateTo('life')">
+            <span>📷</span> يومياتي ولحظاتي
+          </button>
+        </div>
+      </div>
+      <div class="hero-scroll-hint" onclick="navigateTo('drawings')">
+        <span>اكتشف المزيد</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </div>
+    </header>
+
+    <!-- About Section on Home -->
+    <section class="about-section" id="aboutSection">
+      <div class="about-inner">
+        <div class="about-img-wrap">
+          <div class="about-decoration"></div>
+          <div class="about-img-frame">
+            <img src="mimi_avatar.jpg" alt="الفنانة ميمي" id="artistAvatar">
+          </div>
+        </div>
+        <div class="about-text">
+          <span class="section-tag">نبذة عن الفنانة</span>
+          <h2>أهلاً، أنا <em>ميمي</em></h2>
+          <p>
+            مرحبة أنا فتاة احب الرسم والحيوان واكتر حيوان أحبة القط و الثعلب
+            واحب الطبيعة وال شاي والهدوء والرعب
+          </p>
+          <p>
+            متحف الرسماتي وحياتي اليومية
+          </p>
+          <div class="stats-row">
+            <div class="stat-item">
+              <div class="stat-num" id="statDrawingsCount">0</div>
+              <div class="stat-label">لوحة معروضة</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num" id="statLifeCount">0</div>
+              <div class="stat-label">ذكرى يومية</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">∞</div>
+              <div class="stat-label">شغف وإلهام</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Artwork Preview -->
+    <section class="featured-section">
+      <div class="section-header">
+        <span class="section-tag">أبرز الأعمال</span>
+        <h2>مختارات من <em>المرسم</em></h2>
+        <p>لمحات من اللوحات الفنية المفضلة في المتحف</p>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="featured-grid" id="homeFeaturedGrid">
+        <!-- Injected dynamically by script.js -->
+      </div>
+
+      <div style="text-align: center; margin-top: 3rem;">
+        <button class="btn btn-primary" onclick="navigateTo('drawings')">
+          عرض كل الرسومات في المتحف ←
+        </button>
+      </div>
+    </section>
+  </section>
+
+  <!-- ======================== PAGE 2: DRAWINGS GALLERY ======================== -->
+  <section id="drawings" class="page">
+    <div class="gallery-page-header">
+      <span class="section-tag" style="color: var(--gold-light);">المعرض الدائم</span>
+      <h1>جناح <em>رسومات ميمي</em></h1>
+      <p>تجوّلوا بين أعمالي الفنية، حيث تنبض كل لوحة بقصة وشعور وألوان متناغمة.</p>
+    </div>
+
+    <div class="gallery-controls">
+      <div class="filter-tabs" id="drawingsFilterTabs">
+        <button class="filter-tab active" data-category="all" onclick="filterDrawings('all', this)">الكل</button>
+        <button class="filter-tab" data-category="طبيعة" onclick="filterDrawings('طبيعة', this)">طبيعة 🌿</button>
+        <button class="filter-tab" data-category="زيتي" onclick="filterDrawings('زيتي', this)">ألوان زيتية 🎨</button>
+        <button class="filter-tab" data-category="مائي" onclick="filterDrawings('مائي', this)">ألوان مائية 💧</button>
+        <button class="filter-tab" data-category="رقمي" onclick="filterDrawings('رقمي', this)">رسم رقمي ✨</button>
+        <button class="filter-tab" data-category="سكتش" onclick="filterDrawings('سكتش', this)">سكتشات ✏️</button>
+      </div>
+
+      <button class="upload-btn creator-only" onclick="openUploadModal('drawing')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        إضافة رسمة للمتحف
+      </button>
+    </div>
+
+    <!-- Drawing Cards Grid -->
+    <div class="gallery-grid" id="drawingsGrid">
+      <!-- Injected by script.js -->
+    </div>
+  </section>
+
+  <!-- ======================== PAGE 3: DAILY LIFE DIARY ======================== -->
+  <section id="life" class="page">
+    <div class="life-page-header">
+      <span class="section-tag" style="color: var(--gold-light);">ألبوم الذكريات</span>
+      <h1>يوميات <em>ميمي</em> وتفاصيل الحياة</h1>
+      <p>نافذة صغيرة على تفاصيل أيامي الجميلة، شاي، مرسمي ولحظات ملهمة.</p>
+    </div>
+
+    <div class="gallery-controls">
+      <div class="filter-tabs" id="lifeFilterTabs">
+        <button class="filter-tab active" data-category="all" onclick="filterLife('all', this)">الكل</button>
+        <button class="filter-tab" data-category="مرسم" onclick="filterLife('مرسم', this)">في المرسم 🖌️</button>
+        <button class="filter-tab" data-category="شاي" onclick="filterLife('شاي', this)">شاي وصباح ☕</button>
+        <button class="filter-tab" data-category="طبيعة" onclick="filterLife('طبيعة', this)">خروجات وطبيعة 🍃</button>
+        <button class="filter-tab" data-category="كتب" onclick="filterLife('كتب', this)">قراءة ودفاتر 📖</button>
+      </div>
+
+      <button class="upload-btn creator-only"
+        style="background: linear-gradient(135deg, var(--brown-warm), var(--brown-dark));"
+        onclick="openUploadModal('life')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        إضافة صورة من يومياتي
+      </button>
+    </div>
+
+    <!-- Life Cards Grid -->
+    <div class="life-grid" id="lifeGrid">
+      <!-- Injected by script.js -->
+    </div>
+  </section>
+
+  <!-- ======================== UPLOAD MODAL (DRAWING) ======================== -->
+  <div class="modal-overlay" id="drawingModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="drawingModalTitle">🎨 إضافة لوحة جديدة للمتحف</h3>
+        <button class="modal-close" onclick="closeModals()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="drop-zone" id="drawingDropZone" onclick="document.getElementById('drawingFileInput').click()">
+          <input type="file" id="drawingFileInput" accept="image/*" onchange="handleFileSelect(event, 'drawing')">
+          <div class="drop-zone-icon">🖼️</div>
+          <h4>اضغطي هنا لاختيار صورة الرسمة</h4>
+          <p>أو اسحبي وأفلتي الصورة هنا (JPG, PNG, WebP)</p>
+          <div class="drop-zone-preview" id="drawingPreview">
+            <img src="" id="drawingPreviewImg" alt="معاينة">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="drawingTitle">عنوان اللوحة *</label>
+          <input type="text" id="drawingTitle" placeholder="مثال: همس الغابة الخضراء" required>
+        </div>
+
+        <div class="form-group">
+          <label for="drawingCategory">تصنيف اللوحة</label>
+          <select id="drawingCategory">
+            <option value="طبيعة">طبيعة 🌿</option>
+            <option value="زيتي">ألوان زيتية 🎨</option>
+            <option value="مائي">ألوان مائية 💧</option>
+            <option value="رقمي">رسم رقمي ✨</option>
+            <option value="سكتش">سكتشات ✏️</option>
+            <option value="عام">أخرى</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="drawingDescription">وصف أو قصة اللوحة (اختياري)</label>
+          <textarea id="drawingDescription" placeholder="ما الشعور أو الفكرة خلف هذه اللوحة؟"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-modal-cancel" onclick="closeModals()">إلغاء</button>
+        <button class="btn-modal-submit" onclick="saveDrawing()">حفظ في المتحف ✨</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== UPLOAD MODAL (LIFE) ======================== -->
+  <div class="modal-overlay" id="lifeModal">
+    <div class="modal">
+      <div class="modal-header" style="background: linear-gradient(135deg, var(--brown-dark), var(--brown-mid));">
+        <h3>📷 إضافة لحظة من يوميات ميمي</h3>
+        <button class="modal-close" onclick="closeModals()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="drop-zone life-drop" id="lifeDropZone" onclick="document.getElementById('lifeFileInput').click()">
+          <input type="file" id="lifeFileInput" accept="image/*" onchange="handleFileSelect(event, 'life')">
+          <div class="drop-zone-icon">📸</div>
+          <h4>اضغطي هنا لاختيار صورة من يومياتك</h4>
+          <p>أو اسحبي الصورة وأفلتيها هنا</p>
+          <div class="drop-zone-preview" id="lifePreview">
+            <img src="" id="lifePreviewImg" alt="معاينة">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lifeTitle">عنوان اللحظة *</label>
+          <input type="text" id="lifeTitle" placeholder="مثال: شاي الصباح وتخطيط الرسمة القادمة" required>
+        </div>
+
+        <div class="form-group">
+          <label for="lifeCategory">نوع اللحظة</label>
+          <select id="lifeCategory">
+            <option value="مرسم">في المرسم 🖌️</option>
+            <option value="شاي">شاي وصباح ☕</option>
+            <option value="طبيعة">خروجات وطبيعة 🍃</option>
+            <option value="كتب">قراءة ودفاتر 📖</option>
+            <option value="يوميات">يوميات عامة ☀️</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="lifeDate">تاريخ أو توقيت الصورة</label>
+          <input type="text" id="lifeDate" placeholder="مثال: صباح يوم مشمس أو 14 سبتمبر">
+        </div>
+
+        <div class="form-group">
+          <label for="lifeDescription">خاطرة أو تعليق لطيف</label>
+          <textarea id="lifeDescription" placeholder="كلمات أو شعور تودين تذكره مع هذه الصورة..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-modal-cancel" onclick="closeModals()">إلغاء</button>
+        <button class="btn-modal-submit life-submit" onclick="saveLifeEntry()">حفظ الذكرى 💖</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== ARTIST AUTH MODAL (بوابة الفنانة) ======================== -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal" style="max-width: 440px;">
+      <div class="modal-header" style="background: linear-gradient(135deg, var(--green-dark), var(--brown-dark));">
+        <h3 id="authModalTitle">🔐 تسجيل دخول الفنانة (ميمي)</h3>
+        <button class="modal-close" onclick="closeModals()">✕</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">👑</div>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.2rem;">
+          المتحف محمي ومخصص فقط لـ <strong>ميمي</strong> لإضافة وإدارة اللوحات والصور.<br>
+          يرجى إدخال رمز المرور السري:
+        </p>
+
+        <div class="form-group">
+          <input type="password" id="artistPasswordInput" class="pin-input" placeholder="••••••••"
+            autocomplete="current-password" onkeyup="if(event.key==='Enter') verifyArtistPassword()">
+        </div>
+
+        <div id="authErrorMessage" style="color: #dc2626; font-size: 0.85rem; display: none; margin-top: 0.5rem;">
+          ⚠️ رمز المرور غير صحيح! يرجى المحاولة مجدداً.
+        </div>
+
+        <p style="font-size: 0.78rem; color: #8c7b6d; margin-top: 1rem;">
+          ممنوع الدخول غير الميمي
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center; gap: 1rem;">
+        <button class="btn-modal-cancel" onclick="closeModals()">إلغاء</button>
+        <button class="btn-modal-submit" onclick="verifyArtistPassword()">تأكيد الدخول ✨</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== LIGHTBOX MODAL ======================== -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <div class="lightbox-img-wrap" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="إغلاق">✕</button>
+      <img src="" id="lightboxImg" alt="عرض مكبر">
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+
+  <!-- ======================== TOAST NOTIFICATION ======================== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer>
+    <div class="footer-logo">متحف ميمي الفني</div>
+    <p>ملاذ هادئ للفن، والألوان، وذكريات الأيام البسيطة 🌿</p>
+    <p style="opacity: 0.7; font-size: 0.8rem; margin-top: 1rem;">
+      &copy; 2026 متحف ميمي الفني. جميع الحقوق محفوظة.
+    </p>
+  </footer>
+
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+# Netlify Deployment Configuration — متحف ميمي الفني
+# Static HTML site, no build step required.
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[redirects]]
+  from = "/drawings"
+  to = "/#drawings"
+  status = 301
+
+[[redirects]]
+  from = "/life"
+  to = "/#life"
+  status = 301
