@@ -58,3 +58,38 @@ CREATE POLICY "public_delete_drawings"
 
 CREATE POLICY "public_delete_life"
   ON life_entries FOR DELETE USING (true);
+
+-- =====================================================
+-- صلاحيات رفع وقراءة الصور في Storage (حافظة mimi-art)
+-- =====================================================
+DROP POLICY IF EXISTS "Allow public upload" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public read" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public delete" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public update" ON storage.objects;
+
+DROP POLICY IF EXISTS "mimi_storage_insert" ON storage.objects;
+DROP POLICY IF EXISTS "mimi_storage_select" ON storage.objects;
+DROP POLICY IF EXISTS "mimi_storage_delete" ON storage.objects;
+DROP POLICY IF EXISTS "mimi_storage_update" ON storage.objects;
+
+CREATE POLICY "mimi_storage_insert"
+  ON storage.objects FOR INSERT
+  TO public
+  WITH CHECK (bucket_id = 'mimi-art');
+
+CREATE POLICY "mimi_storage_select"
+  ON storage.objects FOR SELECT
+  TO public
+  USING (bucket_id = 'mimi-art');
+
+CREATE POLICY "mimi_storage_delete"
+  ON storage.objects FOR DELETE
+  TO public
+  USING (bucket_id = 'mimi-art');
+
+CREATE POLICY "mimi_storage_update"
+  ON storage.objects FOR UPDATE
+  TO public
+  USING (bucket_id = 'mimi-art');
+
+
