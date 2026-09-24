@@ -75,7 +75,7 @@ function verifyArtistPassword() {
   const errorMsg = document.getElementById('authErrorMessage');
   const enteredPass = input ? input.value.trim() : '';
 
-  if (enteredPass === 'mimi2026') {
+  if (enteredPass === 'شاي') {
     sessionStorage.setItem('mimi_authenticated', 'true');
     closeModals();
     updateAuthUI();
